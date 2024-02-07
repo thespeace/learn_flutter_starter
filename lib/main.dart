@@ -30,16 +30,18 @@ class App extends StatelessWidget{//일반 클래스인 App()을 Widget으로 �
           padding: EdgeInsets.symmetric(horizontal:
           40),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.
+            start,
             children: [
-              SizedBox(
+              SizedBox( //사이즈가 있는 박스를 생성하는 widget.
                 height: 80,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.
+              Row( //요소들을 옆에 두려면 Row.
+                mainAxisAlignment: MainAxisAlignment. //row의 mainAxis : 수평(가로)방향 <-> crossAxis : 수직(세로)방향
                 end,
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.
+                    crossAxisAlignment: CrossAxisAlignment. //column의 mainAxis : 수직(세로)방향  <-> CrossAxis : 수평(가로)방향
                     end,
                     children: [
                       Text(
@@ -50,16 +52,64 @@ class App extends StatelessWidget{//일반 클래스인 App()을 Widget으로 �
                           fontWeight: FontWeight.w800,
                         ),
                       ),
-                      Text('Welcom back',
+                      Text(
+                        'Welcom back',
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.8),
                           fontSize: 18,
                         ),
                       ),
                     ],
-                  )
+                  ) //요소들을 서로 위 아래에 놓으려면 Column.
                 ],
-              )
+              ),
+              SizedBox(
+                height: 120,
+              ),
+              Text(
+                'Total Balance',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.white.withOpacity(0.8),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                '\$5 194 582',
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  Container( //HTML의 div같은 요소.
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.
+                      circular(45),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 20,
+                        horizontal: 50,
+                      ),
+                      child: Text(
+                        'Transfer',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         )
