@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_flutter_starter/widgets/button.dart';
 
 /// -Widget
 ///  import된 runApp Func은 void 함수로 아무것도 반환 하지 않지만 하나의 argument인 `Widget` 타입이 필요하다.
@@ -30,8 +31,9 @@ class App extends StatelessWidget{//일반 클래스인 App()을 Widget으로 �
       home : Scaffold( //MaterialApp class의 수 많은 member 중의 하나의 property인 Scaffold(구조)는 필수적이다.
         backgroundColor: const Color(0xFF181818),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal:
-          40),
+          padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.
             start,
@@ -90,26 +92,18 @@ class App extends StatelessWidget{//일반 클래스인 App()을 Widget으로 �
               const SizedBox(
                 height: 30,
               ),
-              Row(
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container( //HTML의 div같은 요소.
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.
-                      circular(45),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 20,
-                        horizontal: 50,
-                      ),
-                      child: Text(
-                        'Transfer',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
+                  Button(
+                      text: 'Transfer',
+                      bgColor: Color(0xFFF1B33B),
+                      textColor: Colors.black,
+                  ),
+                  Button(
+                      text: 'Request',
+                      bgColor: Color(0xFF1F2123),
+                      textColor: Colors.white,
                   ),
                 ],
               ),
