@@ -141,27 +141,24 @@ class App extends StatelessWidget{//일반 클래스인 App()을 Widget으로 �
                     amount: '6 428',
                     icon: Icons.euro_rounded,
                     isInverted: false,
+                    order: 1,
                 ),
-                Transform.translate(
-                  offset: const Offset(0, -20),
-                  child: const CurrencyCard(
-                      name: 'Dollar',
-                      code: 'USD',
-                      amount: '55 622',
-                      icon: Icons.attach_money_outlined,
-                      isInverted: true,
-                  ),
+                const CurrencyCard(
+                    name: 'Dollar',
+                    code: 'USD',
+                    amount: '55 622',
+                    icon: Icons.attach_money_outlined,
+                    isInverted: true,
+                    order: 1,
                 ),
-                Transform.translate(
-                  offset: const Offset(0, -40),
-                  child: const CurrencyCard(
+                const CurrencyCard(
                     name: 'Rupee',
                     code: 'INR',
                     amount: '28 981',
                     icon: Icons.currency_rupee,
                     isInverted: false,
+                    order: 2,
                   ),
-                ),
               ],
             ),
           ),
