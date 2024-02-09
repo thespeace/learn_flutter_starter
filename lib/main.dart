@@ -178,21 +178,34 @@ class DataApp extends StatefulWidget {//StatefulWidget의 첫 번째 부문은 �
 
 class _DataAppState extends State<DataApp> {//StatefulWidget의 두 번째 부문인 State는 위젯의 데이터(Dart's Class Properties)와 UI를 저장한다.
 
+  //State는 뭐든 저장가능하다.
   int counter = 0;
+  List<int> numbers = [];
 
   void onClicked(){
-    counter++;
+    setState(() { //State클래스에게 데이터가 변경되었다고 알리는 함수(build method reload).
+      counter++; //데이터가 변경되는 코드를 필수적으로 함수안에 넣지 않아도 되지만 가독성을 위해 넣는게 좋다.
+      numbers.add(numbers.length);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            color: Colors.red,
+          ),
+        ),
+      ),
       home: Scaffold(
         backgroundColor: const Color(0xFFF4EDDB),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const MyLargeTitle(),
               const Text(
                 'Click Count',
                 style:
@@ -212,10 +225,27 @@ class _DataAppState extends State<DataApp> {//StatefulWidget의 두 번째 부�
                   onPressed: onClicked,
                   icon: const Icon(Icons.add_box_rounded),
               ),
+              for(var n in numbers) Text('$n'),
             ],
           ),
+
+
         ),
       ),
+    );
+  }
+}
+
+class MyLargeTitle extends StatelessWidget {
+  const MyLargeTitle({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {//context는 Text 이전에 있는 모든 상위 요소들에 대한 정보(MyLargeTitle Text의 부모 요소들의 모든 정보)이다. 위젯 트리로 확인가능하고 BuildContext를 사용하면 아주 먼 곳의 요소에 접근 가능하다.
+    return Text(
+      'My Large Title',
+      style: TextStyle(fontSize: 30, color: Theme.of(context).textTheme.titleLarge!.color,), // null safe에 대해 `!`로 강력하게 확신할 수도 있고 `?`로 만약 그것이 있는 경우 사용하라고 지정할 수도 있다.
     );
   }
 }
