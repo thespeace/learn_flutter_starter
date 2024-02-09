@@ -20,10 +20,11 @@ class Player {
 
 void main() {//dart 시작점(main Func)
   // var thespeace = Player();
-  runApp(App());
+  // runApp(NoDataApp()); //Stateless
+  runApp(DataApp());
 }
 
-class App extends StatelessWidget{//일반 클래스인 App()을 Widget으로 만들기 위해서는 flutter SDK에 있는 3개의 core Widget중에 하나를 상속받아야 한다.
+class NoDataApp extends StatelessWidget{//일반 클래스인 App()을 Widget으로 만들기 위해서는 flutter SDK에 있는 3개의 core Widget중에 하나를 상속받아야 한다.
                                   //가장 기초적이고 쉬운 StatelessWidget을 사용하여 App Widget을 우리 앱의 root로 만들었다.
   @override
   Widget build(BuildContext context) { //해당 메서드는 flutter가 실행하고 무엇을 return하던 그걸 화면에 띄워준다.
@@ -166,5 +167,56 @@ class App extends StatelessWidget{//일반 클래스인 App()을 Widget으로 �
       ),
     );
   }
-
 }
+
+class DataApp extends StatefulWidget {//StatefulWidget의 첫 번째 부문은 위젯 그 자체.
+  const DataApp({super.key});
+
+  @override
+  State<DataApp> createState() => _DataAppState();
+}
+
+class _DataAppState extends State<DataApp> {//StatefulWidget의 두 번째 부문인 State는 위젯의 데이터(Dart's Class Properties)와 UI를 저장한다.
+
+  int counter = 0;
+
+  void onClicked(){
+    counter++;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: const Color(0xFFF4EDDB),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Click Count',
+                style:
+                TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              Text(
+                  '$counter',
+                  style:
+                  const TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              IconButton(
+                  iconSize: 40,
+                  onPressed: onClicked,
+                  icon: const Icon(Icons.add_box_rounded),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
