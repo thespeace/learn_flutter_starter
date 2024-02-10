@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class PomodoroHomeScreen extends StatefulWidget {
@@ -8,6 +10,23 @@ class PomodoroHomeScreen extends StatefulWidget {
 }
 
 class _PomodoroHomeScreenState extends State<PomodoroHomeScreen> {
+
+  int totalSeconds = 1500;
+  late Timer timer; //Timer : Dart의 Standard Library.
+
+  void onTick(Timer timer){
+    setState(() {
+      totalSeconds = totalSeconds - 1;
+    });
+  }
+
+  void onStartPressed() {
+    timer = Timer.periodic(
+      Duration(seconds: 1),
+      onTick,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +38,7 @@ class _PomodoroHomeScreenState extends State<PomodoroHomeScreen> {
             child: Container(
               alignment: Alignment.bottomCenter,
               child: Text(
-                '25:00',
+                '$totalSeconds',
                 style: TextStyle(
                   color: Theme.of(context).cardColor,
                   fontSize: 89,
@@ -34,7 +53,7 @@ class _PomodoroHomeScreenState extends State<PomodoroHomeScreen> {
               child: IconButton(
                 iconSize: 120,
                 color: Theme.of(context).cardColor,
-                onPressed: (){},
+                onPressed: onStartPressed,
                 icon: Icon(Icons.play_circle_outline),
               ),
             ),
@@ -47,6 +66,7 @@ class _PomodoroHomeScreenState extends State<PomodoroHomeScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(50),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
