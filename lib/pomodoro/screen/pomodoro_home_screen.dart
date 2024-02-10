@@ -12,6 +12,7 @@ class PomodoroHomeScreen extends StatefulWidget {
 class _PomodoroHomeScreenState extends State<PomodoroHomeScreen> {
 
   int totalSeconds = 1500;
+  bool isRunning = false;
   late Timer timer; //Timer : Dart의 Standard Library.
 
   void onTick(Timer timer){
@@ -21,10 +22,21 @@ class _PomodoroHomeScreenState extends State<PomodoroHomeScreen> {
   }
 
   void onStartPressed() {
+
     timer = Timer.periodic(
       Duration(seconds: 1),
       onTick,
     );
+    setState(() {
+      isRunning = true;
+    });
+  }
+
+  void onPausePressed() {
+    timer.cancel();
+    setState(() {
+      isRunning = false;
+    });
   }
 
   @override
@@ -53,8 +65,11 @@ class _PomodoroHomeScreenState extends State<PomodoroHomeScreen> {
               child: IconButton(
                 iconSize: 120,
                 color: Theme.of(context).cardColor,
-                onPressed: onStartPressed,
-                icon: Icon(Icons.play_circle_outline),
+                onPressed: isRunning ? onPausePressed : onStartPressed,
+                icon: Icon(isRunning
+                    ? Icons.pause_circle_outline
+                    : Icons.play_circle_outline
+                ),
               ),
             ),
           ),
