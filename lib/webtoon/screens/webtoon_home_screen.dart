@@ -6,7 +6,7 @@ import '../models/webtoon_model.dart';
 class WebtoonHomeScreen extends StatelessWidget {
   WebtoonHomeScreen({super.key});
 
-  Future<List<WebtoonModel>> webtoons = WebtoonApiService.getTodaysToons();
+  final Future<List<WebtoonModel>> webtoons = WebtoonApiService.getTodaysToons();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class WebtoonHomeScreen extends StatelessWidget {
         elevation: 2,
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
-        title: Text(
+        title: const Text(
           "오늘의 웹툰",
           style: TextStyle(
             fontSize: 24,
@@ -26,11 +26,38 @@ class WebtoonHomeScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
           future: webtoons, //default로 await가 명시되어 있다.(숨김)
-          builder: (context, snapshot) {
-            if(snapshot.hasData) {
-              return Text("There is data!");
+          builder: (context, future) {
+            if(future.hasData) {
+              /*return ListView(//ListView : 많은 양의 데이터를 연속적으로 한번에 노출할 때 사용(SDK Package!!!).
+                children: [
+                  for(var webtoon in future.data!) Text(webtoon.title)
+                ],
+              );*/
+              /*return ListView.builder(//ListView.builder는 좀 더 최적화된 ListView.
+                scrollDirection: Axis.horizontal,
+                itemCount: future.data!.length,
+                itemBuilder: (context, index) { //사용자가 보고 있는 아이템만 build, 나머지는 메모리에서 삭제. 효율적인 메모리 사용!
+                  print(index);
+                  var webtoon = future.data![index];
+                  return Text(webtoon.title);
+                },
+              );*/
+              return ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: future.data!.length,
+                itemBuilder: (context, index) {
+                  print(index);
+                  var webtoon = future.data![index];
+                  return Text(webtoon.title);
+                },
+                separatorBuilder: (context, index) => SizedBox(//ListView.builder에서 separatorBuilder 인자 추가, 리스트 아이템 사이에 구분자 추가.
+                  width: 20,
+                ),
+              );
             } else {
-              return Text('Loading....');
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
           },
       ),
