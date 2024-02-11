@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter_starter/pomodoro/pomodoro_app.dart';
+import 'package:learn_flutter_starter/webtoon/services/webtoon_api_service.dart';
 import 'package:learn_flutter_starter/webtoon/webtoon_app.dart';
 import 'package:learn_flutter_starter/widgets/button.dart';
 import 'package:learn_flutter_starter/widgets/currency_card.dart';
@@ -21,11 +22,12 @@ class Player {
 }
 
 void main() {//dart 시작점(main Func)
+  WebtoonApiService().getTodaysToons();//Simple Webtoon App Data Fetching Test
   // var thespeace = Player();
   // runApp(NoDataApp()); //Stateless
   // runApp(DataApp()); //Stateful
   // runApp(pomodoroApp()); //pomodoro app clone coding
-  runApp(const WebtoonApp());
+  runApp(const WebtoonApp());//Webtoon App Clone coding
 }
 
 class NoDataApp extends StatelessWidget{//일반 클래스인 App()을 Widget으로 만들기 위해서는 flutter SDK에 있는 3개의 core Widget중에 하나를 상속받아야 한다.
