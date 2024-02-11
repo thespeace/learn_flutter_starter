@@ -22,7 +22,6 @@ class Player {
 }
 
 void main() {//dart 시작점(main Func)
-  WebtoonApiService().getTodaysToons();//Simple Webtoon App Data Fetching Test
   // var thespeace = Player();
   // runApp(NoDataApp()); //Stateless
   // runApp(DataApp()); //Stateful
