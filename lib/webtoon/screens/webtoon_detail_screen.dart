@@ -29,31 +29,34 @@ class WebtoonDetailScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  width: 250,
-                  clipBehavior: Clip.hardEdge, //자식의 부모 영역 침범을 제어하는 방법
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 15,
-                          offset: Offset(10, 10),
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                      ]
-                  ),
-                  child: Image.network(
-                    thumb,
-                    headers: const {
-                      'Referer': 'https://comic.naver.com',
-                    },
-                  )
+              Hero(
+                tag: id,
+                child: Container(
+                    width: 250,
+                    clipBehavior: Clip.hardEdge, //자식의 부모 영역 침범을 제어하는 방법
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 15,
+                            offset: Offset(10, 10),
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ]
+                    ),
+                    child: Image.network(
+                      thumb,
+                      headers: const {
+                        'Referer': 'https://comic.naver.com',
+                      },
+                    )
+                ),
               ),
             ],
           ),

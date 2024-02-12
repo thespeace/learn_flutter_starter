@@ -30,25 +30,28 @@ class WebtoonWidget extends StatelessWidget {
       },
       child: Column(
         children: [
-          Container(
-              width: 250,
-              clipBehavior: Clip.hardEdge, //자식의 부모 영역 침범을 제어하는 방법
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 15,
-                      offset: Offset(10, 10),
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                  ]
-              ),
-              child: Image.network(
-                thumb,
-                headers: const {
-                  'Referer': 'https://comic.naver.com',
-                },
-              )
+          Hero(//두 페이지의 같은 이미지가 있다면 전환할때 전환 전의 이미지를 전환하는 페이지에 끌어오는 애니메이션 추가해주는 위젯.
+            tag: id,
+            child: Container(
+                width: 250,
+                clipBehavior: Clip.hardEdge, //자식의 부모 영역 침범을 제어하는 방법
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 15,
+                        offset: Offset(10, 10),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ]
+                ),
+                child: Image.network(
+                  thumb,
+                  headers: const {
+                    'Referer': 'https://comic.naver.com',
+                  },
+                )
+            ),
           ),
           const SizedBox(
             height: 10,
