@@ -42,25 +42,75 @@ class WebtoonHomeScreen extends StatelessWidget {
                   return Text(webtoon.title);
                 },
               );*/
-              return ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: future.data!.length,
-                itemBuilder: (context, index) {
-                  print(index);
-                  var webtoon = future.data![index];
-                  return Text(webtoon.title);
-                },
-                separatorBuilder: (context, index) => SizedBox(//ListView.builder에서 separatorBuilder 인자 추가, 리스트 아이템 사이에 구분자 추가.
-                  width: 20,
-                ),
+              return Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Expanded(//화면의 남는 공간을 차지하는 위젯.
+                      child: makeList(future),
+                  ),
+                ],
               );
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
           },
       ),
     );
+  }
+
+  ListView makeList(AsyncSnapshot<List<WebtoonModel>> future) {
+    return ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: future.data!.length,
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 20
+              ),
+              itemBuilder: (context, index) {
+                print(index);
+                var webtoon = future.data![index];
+                return Column(
+                  children: [
+                    Container(
+                      width: 250,
+                      clipBehavior: Clip.hardEdge, //자식의 부모 영역 침범을 제어하는 방법
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 15,
+                            offset: Offset(10, 10),
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ]
+                      ),
+                      child: Image.network(
+                          webtoon.thumb,
+                          headers: const {
+                            'Referer': 'https://comic.naver.com',
+                          },
+                      )
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      webtoon.title,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                );
+              },
+              separatorBuilder: (context, index) => const SizedBox(//ListView.builder에서 separatorBuilder 인자 추가, 리스트 아이템 사이에 구분자 추가.
+                width: 40,
+              ),
+            );
   }
 }
