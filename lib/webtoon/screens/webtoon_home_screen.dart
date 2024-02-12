@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter_starter/webtoon/services/webtoon_api_service.dart';
+import 'package:learn_flutter_starter/webtoon/widgets/webtoon_widget.dart';
 
 import '../models/webtoon_model.dart';
 
@@ -73,39 +74,10 @@ class WebtoonHomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 print(index);
                 var webtoon = future.data![index];
-                return Column(
-                  children: [
-                    Container(
-                      width: 250,
-                      clipBehavior: Clip.hardEdge, //자식의 부모 영역 침범을 제어하는 방법
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 15,
-                            offset: Offset(10, 10),
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                        ]
-                      ),
-                      child: Image.network(
-                          webtoon.thumb,
-                          headers: const {
-                            'Referer': 'https://comic.naver.com',
-                          },
-                      )
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      webtoon.title,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                return WebtoonWidget(
+                  title: webtoon.title,
+                  thumb: webtoon.thumb,
+                  id: webtoon.id
                 );
               },
               separatorBuilder: (context, index) => const SizedBox(//ListView.builder에서 separatorBuilder 인자 추가, 리스트 아이템 사이에 구분자 추가.
