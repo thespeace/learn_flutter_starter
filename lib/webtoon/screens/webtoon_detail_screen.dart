@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter_starter/webtoon/services/webtoon_api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/webtoon_detail_model.dart';
 import '../models/webtoon_episode_model.dart';
@@ -24,12 +25,45 @@ class _WebtoonDetailScreenState extends State<WebtoonDetailScreen> {
 
   late Future<WebtoonDetailModel> webtoon; //constructor에서 widget이 참조 될 수 없기때문에 late 선언.
   late Future<List<WebtoonEpisodeModel>> episodes; //초기화 하고 싶은 property를 생성자에서 불가능한 경우, late를 유용하게 쓸 수 있다.
+  late SharedPreferences prefs;
+  bool isLiked = false;
+
+  Future initPrefs() async { //사용자의 저장소에 connection.
+    prefs = await SharedPreferences.getInstance();
+    final likedToons = prefs.getStringList('likedToons');
+    if(likedToons != null) {
+      if(likedToons.contains(widget.id) == true) {
+        isLiked = true;
+        setState(() {
+          isLiked = true;
+        });
+      }
+    } else {
+      await prefs.setStringList('likedToons', []);
+    }
+  }
+
+  onHeartTap() async {
+    final likedToons = prefs.getStringList('likedToons');
+    if(likedToons != null) {
+      if(isLiked) {
+        likedToons.remove(widget.id);
+      } else {
+        likedToons.add(widget.id);
+      }
+      await prefs.setStringList('likedToons', likedToons);
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     webtoon = WebtoonApiService.getToonById(widget.id);
     episodes = WebtoonApiService.getLatestEpisodeById(widget.id);
+    initPrefs();
   }
 
   @override
@@ -40,6 +74,14 @@ class _WebtoonDetailScreenState extends State<WebtoonDetailScreen> {
         elevation: 2,
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
+        actions: [
+          IconButton(
+            onPressed: onHeartTap,
+            icon: Icon(
+              isLiked ? Icons.favorite : Icons.favorite_outline_outlined,
+            ),
+          ),
+        ],
         title: Text(
             widget.title, //State의 build method가 State가 속한 StatefulWidget의 data를 받아오기 위해 widget을 명시해주어야 한다.
             style: const TextStyle(
