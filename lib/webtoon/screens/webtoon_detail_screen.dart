@@ -41,82 +41,128 @@ class _WebtoonDetailScreenState extends State<WebtoonDetailScreen> {
         foregroundColor: Colors.green,
         title: Text(
             widget.title, //State의 build method가 State가 속한 StatefulWidget의 data를 받아오기 위해 widget을 명시해주어야 한다.
-            style: TextStyle(
+            style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(50),
+          child: Column(
             children: [
-              Hero(
-                tag: widget.id,
-                child: Container(
-                    width: 250,
-                    clipBehavior: Clip.hardEdge, //자식의 부모 영역 침범을 제어하는 방법
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 15,
-                            offset: Offset(10, 10),
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                        ]
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Hero(
+                    tag: widget.id,
+                    child: Container(
+                        width: 250,
+                        clipBehavior: Clip.hardEdge, //자식의 부모 영역 침범을 제어하는 방법
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 15,
+                                offset: const Offset(10, 10),
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                            ]
+                        ),
+                        child: Image.network(
+                          widget.thumb,
+                          headers: const {
+                            'Referer': 'https://comic.naver.com',
+                          },
+                        ),
                     ),
-                    child: Image.network(
-                      widget.thumb,
-                      headers: const {
-                        'Referer': 'https://comic.naver.com',
-                      },
-                    ),
-                ),
+                  ),
+                ],
               ),
+              const SizedBox(
+                height: 25,
+              ),
+              FutureBuilder(
+                  future: webtoon,
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData) {
+                      return Column(
+                        crossAxisAlignment:  CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            snapshot.data!.about,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            '${snapshot.data!.genre} / ${snapshot.data!.age}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return const Text("...");
+                }
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              FutureBuilder(
+                  future: episodes,
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData) {
+                      return Column(
+                        children: [
+                          for(var episode in snapshot.data!)
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.green.shade300,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 20,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible (
+                                      fit: FlexFit.loose,
+                                      child: Text(
+                                        episode.title,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                        softWrap: false,
+                                      ),
+                                    ),
+                                    const Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                        ],
+                      );
+                    }
+                    return Container();
+                  },
+              )
             ],
           ),
-          const SizedBox(
-            height: 25,
-          ),
-          FutureBuilder(
-              future: webtoon,
-              builder: (context, snapshot) {
-                if(snapshot.hasData) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 50,
-                    ),
-                    child: Column(
-                      crossAxisAlignment:  CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          snapshot.data!.about,
-                          style: const TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          '${snapshot.data!.genre} / ${snapshot.data!.age}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                return Text("...");
-            }
-          )
-        ],
+        ),
       ),
     );
   }
