@@ -3,6 +3,7 @@ import 'package:learn_flutter_starter/webtoon/services/webtoon_api_service.dart'
 
 import '../models/webtoon_detail_model.dart';
 import '../models/webtoon_episode_model.dart';
+import '../widgets/webtoon_episode_widget.dart';
 
 class WebtoonDetailScreen extends StatefulWidget {
 
@@ -121,39 +122,10 @@ class _WebtoonDetailScreenState extends State<WebtoonDetailScreen> {
                       return Column(
                         children: [
                           for(var episode in snapshot.data!)
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.green.shade300,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible (
-                                      fit: FlexFit.loose,
-                                      child: Text(
-                                        episode.title,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                        ),
-                                        softWrap: false,
-                                      ),
-                                    ),
-                                    const Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
+                            Episode(
+                              episode: episode,
+                              webtoonId: widget.id
+                            ),
                         ],
                       );
                     }
