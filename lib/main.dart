@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter_starter/pomodoro/pomodoro_app.dart';
+import 'package:learn_flutter_starter/ui_clone1/ui_clone1_app.dart';
 import 'package:learn_flutter_starter/webtoon/services/webtoon_api_service.dart';
 import 'package:learn_flutter_starter/webtoon/webtoon_app.dart';
 import 'package:learn_flutter_starter/widgets/button.dart';
@@ -26,7 +27,8 @@ void main() {//dart 시작점(main Func)
   // runApp(NoDataApp()); //Stateless
   // runApp(DataApp()); //Stateful
   // runApp(pomodoroApp()); //pomodoro app clone coding
-  runApp(const WebtoonApp());//Webtoon App Clone coding
+  // runApp(const WebtoonApp()); //Webtoon App Clone coding
+  runApp(const uiClone1App()); //Simple UI Clone Challenge(Hard Coding)
 }
 
 class NoDataApp extends StatelessWidget{//일반 클래스인 App()을 Widget으로 만들기 위해서는 flutter SDK에 있는 3개의 core Widget중에 하나를 상속받아야 한다.
